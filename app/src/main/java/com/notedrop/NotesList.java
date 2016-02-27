@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -57,12 +59,25 @@ public class NotesList extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch(id) {
+            //noinspection SimplifiableIfStatement
+            case R.id.action_settings:
+                break;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            case R.id.action_add_notes:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_main, popup.getMenu());
+        popup.show();
+    }
+
 }
