@@ -19,6 +19,8 @@ import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -151,7 +153,7 @@ public class MainActivity extends Activity {
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     Log.d("Result: ", result.get(0));
                     notes.add(result.get(0));
-                    mLayout.addView(createNewTextView(result.get(0).toLowerCase()));
+                    mLayout.addView(createNewTextView(result.get(0).toLowerCase(), notes.size()-1));
                     scroll.fullScroll(ScrollView.FOCUS_DOWN);
                 }
                 break;
@@ -212,7 +214,7 @@ public class MainActivity extends Activity {
         {
             notes.add(mSharedPreference1.getString(titleString + "_line_" + i, null));
             Log.v("Loading Notes " + i + ": ", notes.get(i));
-            mLayout.addView(createNewTextView(notes.get(i).toLowerCase()));
+            mLayout.addView(createNewTextView(notes.get(i).toLowerCase(), i));
             scroll.fullScroll(ScrollView.FOCUS_DOWN);
         }
     }
@@ -232,24 +234,45 @@ public class MainActivity extends Activity {
         }
     }
 
-    private TextView createNewTextView(String text) {
+    private EditText createNewTextView(String text, final int position) {
         if (notesLabel.getVisibility() == View.VISIBLE)
             notesLabel.setVisibility(View.GONE);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lparams.setMargins(30, 15, 0, 0);
-        TextView textView = new TextView(this);
+        EditText textView = new EditText(this);
+        textView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        textView.setSingleLine(true);
+        textView.setHorizontallyScrolling(false);
+        textView.setMaxLines(Integer.MAX_VALUE);
         if(text.contains("new section")) {
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             text = text.replace("new section", "");
         }
         else {
-            text = " - " + text;
+            if(!text.contains(" - "))
+                text = " - " + text;
         }
         textView.setTextSize(26);
         textView.setTextColor(Color.BLACK);
         textView.setLayoutParams(lparams);
         textView.setText(text);
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                notes.set(position, s.toString());
+            }
+        });
         return textView;
     }
 
