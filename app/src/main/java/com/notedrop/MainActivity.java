@@ -1,8 +1,10 @@
 package com.notedrop;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -58,10 +60,13 @@ public class MainActivity extends Activity {
         scroll = (ScrollView) findViewById(R.id.scroller);
         notesLabel = (TextView) findViewById(R.id.noteslabel);
 
+        SharedPreferences mSharedPreference1 = PreferenceManager.getDefaultSharedPreferences(this);
+        Set<String> set = mSharedPreference1.getStringSet("titles_list", null);
+        if(set != null)
+            titles = new ArrayList<String>(set);
+
         boolean x = isSpeechRecognitionActivityPresented(this);
         Log.v("speech recognizer: ", x + "");
-
-        //loadArray(MainActivity.this);
 
         title = (EditText) findViewById(R.id.title);
 
@@ -184,6 +189,12 @@ public class MainActivity extends Activity {
             return false;
         }
         titles.add(title);
+
+        Set<String> set = new HashSet<String>();
+        set.addAll(titles);
+        mEdit1.remove("titles_list");
+        mEdit1.putStringSet("titles_list", set);
+
         Toast.makeText(MainActivity.this, "Saving..." + title, Toast.LENGTH_SHORT).show();
 
         Log.v("Saving: ", "title_" + (totalLists + 1));

@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ListCustomAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list;
@@ -95,8 +97,12 @@ public class ListCustomAdapter extends BaseAdapter implements ListAdapter {
                 for (int i = 0; i < size; i++) {
                     mEdit1.remove(list.get(position) + "_line_" + i);
                 }
-                mEdit1.commit();
                 list.remove(position);
+                Set<String> set = new HashSet<String>();
+                set.addAll(list);
+                mEdit1.remove("titles_list");
+                mEdit1.putStringSet("titles_list", set);
+                mEdit1.commit();
                 notifyDataSetChanged();
             }
         });
