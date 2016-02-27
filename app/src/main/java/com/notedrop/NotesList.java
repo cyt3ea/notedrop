@@ -1,5 +1,6 @@
 package com.notedrop;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class NotesList extends ActionBarActivity {
@@ -20,7 +23,11 @@ public class NotesList extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_list);
         listView = (ListView) findViewById(R.id.list);
-        String[] values = new String[]{
+        Intent i = getIntent();
+        ArrayList<String> titles = i.getStringArrayListExtra("key");
+        String[] titlesArr = new String[titles.size()];
+        titlesArr = titles.toArray(titlesArr);
+        /*String[] values = new String[]{
           "Chicken Fried Rice",
           "Lo mein with beef",
           "Pad Thai",
@@ -29,19 +36,23 @@ public class NotesList extends ActionBarActivity {
           "General Tsou",
           "Priya",
           "Cup Noodles"
-        };
+        };*/
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+                android.R.layout.simple_list_item_1, android.R.id.text1, titles);
                 listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int itemPosition = position;
                 String itemValue = (String) listView.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                        .show();
+                        .show();*/
+                Intent myIntent = new Intent(NotesList.this, MainActivity.class);
+                myIntent.putExtra("key", itemValue);
+
+                NotesList.this.startActivity(myIntent);
             }
         });
 
