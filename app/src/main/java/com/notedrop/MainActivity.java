@@ -105,10 +105,6 @@ public class MainActivity extends Activity {
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
                 getString(R.string.speech_prompt));
 
-        //TEST TO ADD TEXT ON BUTTON CLICK
-        mLayout.addView(createNewTextView("HI!"));
-        notes.add("HI!");
-        scroll.fullScroll(ScrollView.FOCUS_DOWN);
 
         try {
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
@@ -133,6 +129,7 @@ public class MainActivity extends Activity {
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     Log.d("Result: ", result.get(0));
+                    notes.add(result.get(0));
                     mLayout.addView(createNewTextView(result.get(0)));
                     scroll.fullScroll(ScrollView.FOCUS_DOWN);
                 }
@@ -160,6 +157,7 @@ public class MainActivity extends Activity {
         {
             mEdit1.remove("line_" + i);
             mEdit1.putString("line_" + i, notes.get(i));
+            Log.v("Saving Notes " + i + ": ", notes.get(i));
         }
 
         return mEdit1.commit();
@@ -167,7 +165,7 @@ public class MainActivity extends Activity {
 
     public void loadArray(Context mContext)
     {
-        Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
 
         SharedPreferences mSharedPreference1 = PreferenceManager.getDefaultSharedPreferences(mContext);
         notes.clear();
@@ -176,6 +174,7 @@ public class MainActivity extends Activity {
         for(int i=0;i<size;i++)
         {
             notes.add(mSharedPreference1.getString("line_" + i, null));
+            Log.v("Loading Notes " + i + ": ", notes.get(i));
             mLayout.addView(createNewTextView(notes.get(i)));
             scroll.fullScroll(ScrollView.FOCUS_DOWN);
         }
