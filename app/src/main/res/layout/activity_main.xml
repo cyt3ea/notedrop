@@ -114,15 +114,18 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/notes_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/mic_button"
+        android:layout_below="@+id/notesbar"
+        android:layout_above="@id/mic_button"
         >
 
         <ScrollView
             android:id="@+id/scroller"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <LinearLayout
                 android:id="@+id/notes"
