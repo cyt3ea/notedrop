@@ -3,14 +3,81 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     >
+
+    <LinearLayout
+        android:id="@+id/notesbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:weightSum="1.0"
+        >
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:textSize="26dp"
+            android:hint="Title"
+            android:singleLine="true"
+            />
+
+        <ImageButton
+            android:id="@+id/save"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:background="@drawable/button_border"
+            android:src="@drawable/save"/>
+
+        <ImageButton
+            android:id="@+id/plus"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button_border"
+            android:layout_weight=".1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:src="@drawable/plus"/>
+
+        <ImageButton
+            android:id="@+id/list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button_border"
+            android:layout_weight=".1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:src="@drawable/list"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/noteslabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/notesbar"
         android:gravity="center"
         android:textColor="@color/material_blue_grey_800"
         android:textSize="26dp"
