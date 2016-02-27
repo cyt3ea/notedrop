@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -145,7 +147,7 @@ public class MainActivity extends Activity {
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     Log.d("Result: ", result.get(0));
                     notes.add(result.get(0));
-                    mLayout.addView(createNewTextView(result.get(0)));
+                    mLayout.addView(createNewTextView(result.get(0).toLowerCase()));
                     scroll.fullScroll(ScrollView.FOCUS_DOWN);
                 }
                 break;
@@ -176,7 +178,10 @@ public class MainActivity extends Activity {
         if(titles.contains(title)) {
             Toast.makeText(MainActivity.this, "Title already exists, choose another title!", Toast.LENGTH_SHORT).show();
             return false;
-
+        }
+        else if(title.equals("")) {
+            Toast.makeText(MainActivity.this, "Note needs a title!", Toast.LENGTH_SHORT).show();
+            return false;
         }
         Toast.makeText(MainActivity.this, "Saving..." + title, Toast.LENGTH_SHORT).show();
 
@@ -208,7 +213,7 @@ public class MainActivity extends Activity {
         {
             notes.add(mSharedPreference1.getString(titleString + "_line_" + i, null));
             Log.v("Loading Notes " + i + ": ", notes.get(i));
-            mLayout.addView(createNewTextView(notes.get(i)));
+            mLayout.addView(createNewTextView(notes.get(i).toLowerCase()));
             scroll.fullScroll(ScrollView.FOCUS_DOWN);
         }
     }
@@ -220,7 +225,7 @@ public class MainActivity extends Activity {
         titles.clear();
         SharedPreferences mSharedPreference1 = PreferenceManager.getDefaultSharedPreferences(mContext);
         int size = mSharedPreference1.getInt("total_list_size", 0);
-        Log.v("Load title array: " , ""+size);
+        Log.v("Load title array: ", "" + size);
 
         for(int i=1;i<=size;i++)
         {
@@ -235,6 +240,14 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lparams.setMargins(30, 15, 0, 0);
         TextView textView = new TextView(this);
+        if(text.contains("new section")) {
+            textView.setTypeface(null, Typeface.BOLD);
+            textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            text = text.replace("new section", "");
+        }
+        else {
+            text = " - " + text;
+        }
         textView.setTextSize(26);
         textView.setTextColor(Color.BLACK);
         textView.setLayoutParams(lparams);
