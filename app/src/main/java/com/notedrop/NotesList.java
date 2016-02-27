@@ -38,23 +38,8 @@ public class NotesList extends ActionBarActivity {
           "Cup Noodles"
         };*/
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, titles);
-                listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int itemPosition = position;
-                String itemValue = (String) listView.getItemAtPosition(position);
-                /*Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                        .show();*/
-                Intent myIntent = new Intent(NotesList.this, MainActivity.class);
-                myIntent.putExtra("key", itemValue);
-
-                NotesList.this.startActivity(myIntent);
-            }
-        });
+        ListCustomAdapter adapter = new ListCustomAdapter(titles, this);
+        listView.setAdapter(adapter);
 
 
     }
