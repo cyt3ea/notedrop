@@ -6,11 +6,14 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.Menu;
@@ -34,7 +37,7 @@ public class MainActivity extends Activity {
     private LinearLayout mLayout;
     private ScrollView scroll;
     private TextView notesLabel;
-    private ImageButton send, list;
+    private ImageButton send, list, save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,16 @@ public class MainActivity extends Activity {
         boolean x = isSpeechRecognitionActivityPresented(this);
         Log.v("speech recognizer: ", x + "");
 
+        loadArray(MainActivity.this);
+
+        save = (ImageButton) findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean saved = saveArray();
+                Log.v("Saved?: ", saved + "");
+            }
+        });
         list = (ImageButton) findViewById(R.id.list);
         list.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +107,7 @@ public class MainActivity extends Activity {
 
         //TEST TO ADD TEXT ON BUTTON CLICK
         mLayout.addView(createNewTextView("HI!"));
+        notes.add("HI!");
         scroll.fullScroll(ScrollView.FOCUS_DOWN);
 
         try {
@@ -133,6 +147,38 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public boolean saveArray()
+    {
+        Toast.makeText(MainActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);;
+        SharedPreferences.Editor mEdit1 = sp.edit();
+        mEdit1.putInt("notes_size", notes.size()); /* sKey is an array */
+
+        for(int i=0;i<notes.size();i++)
+        {
+            mEdit1.remove("line_" + i);
+            mEdit1.putString("line_" + i, notes.get(i));
+        }
+
+        return mEdit1.commit();
+    }
+
+    public void loadArray(Context mContext)
+    {
+        Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
+
+        SharedPreferences mSharedPreference1 = PreferenceManager.getDefaultSharedPreferences(mContext);
+        notes.clear();
+        int size = mSharedPreference1.getInt("notes_size", 0);
+
+        for(int i=0;i<size;i++)
+        {
+            notes.add(mSharedPreference1.getString("line_" + i, null));
+            mLayout.addView(createNewTextView(notes.get(i)));
+            scroll.fullScroll(ScrollView.FOCUS_DOWN);
+        }
     }
 
     private TextView createNewTextView(String text) {
