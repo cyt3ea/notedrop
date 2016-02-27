@@ -41,7 +41,7 @@
             android:src="@drawable/save"/>
 
         <ImageButton
-            android:id="@+id/plus"
+            android:id="@+id/send"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
@@ -53,7 +53,7 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:padding="5dp"
-            android:src="@drawable/plus"/>
+            android:src="@drawable/send"/>
 
         <ImageButton
             android:id="@+id/list"

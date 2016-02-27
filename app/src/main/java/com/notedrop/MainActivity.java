@@ -9,6 +9,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
@@ -33,7 +34,7 @@ public class MainActivity extends Activity {
     private LinearLayout mLayout;
     private ScrollView scroll;
     private TextView notesLabel;
-
+    private ImageButton send, list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,25 @@ public class MainActivity extends Activity {
 
         boolean x = isSpeechRecognitionActivityPresented(this);
         Log.v("speech recognizer: ", x + "");
+
+        list = (ImageButton) findViewById(R.id.list);
+        list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,
+                        "List!", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(MainActivity.this, NotesList.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
+        send = (ImageButton) findViewById(R.id.send);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,
+                        "Send!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // hide the action bar
         //getActionBar().hide();
