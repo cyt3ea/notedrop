@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 /*Toast.makeText(MainActivity.this,
                         "List!", Toast.LENGTH_SHORT).show();*/
-                loadTitleArray(MainActivity.this);
+                //loadTitleArray(MainActivity.this);
                 Intent myIntent = new Intent(MainActivity.this, NotesList.class);
                 myIntent.putStringArrayListExtra("key", titles);
 
@@ -106,8 +106,12 @@ public class MainActivity extends Activity {
 
         Intent i = getIntent();
         String selectedNote = i.getStringExtra("key");
+        ArrayList<String> titles_list = i.getStringArrayListExtra("titles_list");
         if(selectedNote != null) {
             loadArray(MainActivity.this, selectedNote);
+        }
+        if(titles_list != null) {
+            titles = titles_list;
         }
     }
 
@@ -169,12 +173,6 @@ public class MainActivity extends Activity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);;
         SharedPreferences.Editor mEdit1 = sp.edit();
         int totalLists = mSharedPreference1.getInt("total_list_size", 0);
-        titles.clear();
-        for(int i=1;i<=totalLists;i++)
-        {
-            titles.add(mSharedPreference1.getString("title_" + i, null));
-            Log.v("Title " + i, titles.get(i-1));
-        }
         if(titles.contains(title)) {
             Toast.makeText(MainActivity.this, "Title already exists, choose another title!", Toast.LENGTH_SHORT).show();
             return false;
@@ -183,12 +181,13 @@ public class MainActivity extends Activity {
             Toast.makeText(MainActivity.this, "Note needs a title!", Toast.LENGTH_SHORT).show();
             return false;
         }
+        titles.add(title);
         Toast.makeText(MainActivity.this, "Saving..." + title, Toast.LENGTH_SHORT).show();
 
         Log.v("Saving: ", "title_" + (totalLists + 1));
         mEdit1.remove("total_list_size");
         mEdit1.putInt("total_list_size", (totalLists + 1));
-        mEdit1.putString("title_" + (totalLists + 1), title);
+        //mEdit1.putString("title_" + (totalLists + 1), title);
 
         mEdit1.remove(title + "_size");
         mEdit1.putInt(title + "_size", notes.size()); /* sKey is an array */
@@ -222,12 +221,11 @@ public class MainActivity extends Activity {
     {
         //Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
 
-        titles.clear();
         SharedPreferences mSharedPreference1 = PreferenceManager.getDefaultSharedPreferences(mContext);
         int size = mSharedPreference1.getInt("total_list_size", 0);
         Log.v("Load title array: ", "" + size);
 
-        for(int i=1;i<=size;i++)
+        for(int i=0;i<titles.size();i++)
         {
             titles.add(mSharedPreference1.getString("title_" + i, null));
             Log.v("Title " + i, titles.get(i-1));

@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ListCustomAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<String> list;
     private Context context;
 
 
@@ -65,6 +65,7 @@ public class ListCustomAdapter extends BaseAdapter implements ListAdapter {
                         "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
                         .show();*/
                 Intent myIntent = new Intent(context, MainActivity.class);
+                myIntent.putStringArrayListExtra("titles_list", list);
                 myIntent.putExtra("key", itemValue);
 
                 context.startActivity(myIntent);
@@ -82,10 +83,13 @@ public class ListCustomAdapter extends BaseAdapter implements ListAdapter {
                 SharedPreferences mSharedPreference1 = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);;
                 SharedPreferences.Editor mEdit1 = sp.edit();
+                Log.v("Deleting: ", list.get(position));
                 int totalLists = mSharedPreference1.getInt("total_list_size", 0);
                 mEdit1.remove("total_list_size");
                 mEdit1.putInt("total_list_size", (totalLists - 1));
-                mEdit1.remove("title_" + position);
+                Log.v("Total list size: ", (totalLists - 1) + "");
+                //Integer my_id = ((MyApplication) context.getApplicationContext()()).getMy_id();
+                //mEdit1.remove(list.get(position));
                 int size = mSharedPreference1.getInt(list.get(position) + "_size", 0);
                 mEdit1.remove(list.get(position) + "_size");
                 for (int i = 0; i < size; i++) {
