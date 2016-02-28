@@ -22,7 +22,7 @@ public class ExportFile extends Activity {
     EditText textTo;
     EditText textSubject;
     EditText textMessage;
-    String eMessage;
+    String eMessage = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,12 +43,12 @@ public class ExportFile extends Activity {
 
         for(int i=0;i<size;i++)
         {
-            eMessage += (mSharedPreference1.getString(title + "_line_" + i, null)) + "\n";
+            String temp = mSharedPreference1.getString(title + "_line_" + i, null);
+                eMessage +=  temp + "\n";
             //Log.v("Loading Notes " + i + ": ", notes.get(i));
             //mLayout.addView(createNewTextView(notes.get(i).toLowerCase(), i));
             //scroll.fullScroll(ScrollView.FOCUS_DOWN);
         }
-        eMessage = "Yous a hoe";
         textMessage.setText(eMessage);
         Log.v("messaqe: ", textMessage.getText().toString());
 
