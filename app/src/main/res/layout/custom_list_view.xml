@@ -12,6 +12,15 @@
         android:paddingLeft="16dp"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/list_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/delete_btn"
+        android:paddingLeft="16dp"
+        android:textSize="18sp" />
+
     <Button
         android:id="@+id/delete_btn"
         android:layout_width="wrap_content"

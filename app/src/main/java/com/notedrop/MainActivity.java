@@ -1,6 +1,8 @@
 package com.notedrop;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +51,7 @@ public class MainActivity extends Activity {
     private TextView notesLabel;
     private ImageButton send, list, save;
     private EditText title;
+    private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,6 +210,27 @@ public class MainActivity extends Activity {
         mEdit1.remove("total_list_size");
         mEdit1.putInt("total_list_size", (totalLists + 1));
         //mEdit1.putString("title_" + (totalLists + 1), title);
+
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH); // starts at 0 for January
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int min = cal.get(Calendar.MINUTE);
+        String x = "AM";
+        if(hour > 12) {
+            hour = hour - 12;
+            x = "PM";
+        }
+        else if(hour == 0)
+            hour = 12;
+        x = year + " " + months[month] + " " + day + " " + hour + ":" + min + x;
+        //Toast.makeText(MainActivity.this,x, Toast.LENGTH_SHORT).show();
+
+        mEdit1.remove(title + "_date");
+        mEdit1.putString(title+ "_date", x);
 
         mEdit1.remove(title + "_size");
         mEdit1.putInt(title + "_size", notes.size()); /* sKey is an array */

@@ -27,8 +27,8 @@ public class NotesList extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.list);
         Intent i = getIntent();
         ArrayList<String> titles = i.getStringArrayListExtra("key");
-        String[] titlesArr = new String[titles.size()];
-        titlesArr = titles.toArray(titlesArr);
+        //String[] titlesArr = new String[titles.size()];
+        //titlesArr = titles.toArray(titlesArr);
         /*String[] values = new String[]{
           "Chicken Fried Rice",
           "Lo mein with beef",

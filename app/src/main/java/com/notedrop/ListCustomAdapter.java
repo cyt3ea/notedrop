@@ -14,6 +14,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,6 +59,11 @@ public class ListCustomAdapter extends BaseAdapter implements ListAdapter {
         //Handle TextView and display string from your list
         TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position));
+        SharedPreferences mSharedPreference1 = PreferenceManager.getDefaultSharedPreferences(context);
+        String date = mSharedPreference1.getString(list.get(position) + "_date", "");
+        TextView listItemDate = (TextView) view.findViewById(R.id.list_item_date);
+        listItemDate.setText(date);
+
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +101,7 @@ public class ListCustomAdapter extends BaseAdapter implements ListAdapter {
                 //mEdit1.remove(list.get(position));
                 int size = mSharedPreference1.getInt(list.get(position) + "_size", 0);
                 mEdit1.remove(list.get(position) + "_size");
+                mEdit1.remove(list.get(position) + "_date");
                 for (int i = 0; i < size; i++) {
                     mEdit1.remove(list.get(position) + "_line_" + i);
                 }
