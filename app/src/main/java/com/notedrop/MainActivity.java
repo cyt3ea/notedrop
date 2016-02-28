@@ -91,12 +91,18 @@ public class MainActivity extends Activity {
                 MainActivity.this.startActivity(myIntent);
             }
         });
+
         send = (ImageButton) findViewById(R.id.send);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("M1: ", "Heyy");
                 Toast.makeText(MainActivity.this,
                         "Send!", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(MainActivity.this, ExportFile.class);
+                myIntent.putExtra("key", title.getText().toString());
+                Log.v("M2: ", "Booo");
+                MainActivity.this.startActivity(myIntent);
             }
         });
 

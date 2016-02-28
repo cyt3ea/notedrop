@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NoteDrop.iml" filepath="$PROJECT_DIR$/NoteDrop.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/itext-pdfa-5.5.8/itext-pdfa-5.5.8.iml" filepath="$PROJECT_DIR$/itext-pdfa-5.5.8/itext-pdfa-5.5.8.iml" />
     </modules>
   </component>
 </project>
