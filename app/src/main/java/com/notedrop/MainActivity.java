@@ -204,7 +204,7 @@ public class MainActivity extends Activity {
         mEdit1.remove("titles_list");
         mEdit1.putStringSet("titles_list", set);
 
-        Toast.makeText(MainActivity.this, "Saving..." + title, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Saving " + title, Toast.LENGTH_SHORT).show();
 
         Log.v("Saving: ", "title_" + (totalLists + 1));
         mEdit1.remove("total_list_size");
